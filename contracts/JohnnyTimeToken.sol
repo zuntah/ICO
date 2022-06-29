@@ -66,8 +66,17 @@
         );
 
         _mint(msg.sender, tokensToMint);
-    } 
+    }
 
+    function withdraw() public onlyOwner() {
+        address _owner = owner();
+        uint256 amount = address(this).balance;
+        (bool sent,) = _owner.call{value: amount}("");
+        require(sent, "Failed to withdraw ETH");
+    }
 
+    receive() external payable {}
+
+    fallback() external payable {}
 
   }
