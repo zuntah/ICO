@@ -36,6 +36,36 @@
         );
 
         _mint(msg.sender, amountWithDecimals);
+    }
+
+    function claim() public {
+
+        // Check if sender has JohnnyTime NFTs
+        address sender = msg.sender;
+        uint256 balance = JohnnyTimeNFTContract.balanceOf(sender);
+        require(balance > 0, "You don't own any JohnnyTime NFTs");
+
+        // Calculate how many claimable NFTs the user have
+        uint256 validClaimableNFTs = 0;
+        for(uint256 i = 0; i < balance; i++) {
+            uint256 tokenId = JohnnyTimeNFTContract.tokenOfOwnerByIndex(sender, i);
+
+            if(!tokenIdsClaimed[tokenId]){
+                validClaimableNFTs += 1;
+                tokenIdsClaimed[tokenId] = true;
+            }
+        }
+        require(validClaimableNFTs > 0, "You've already claimed all the tokens for your NFTs");
+
+        uint256 tokensToMint = validClaimableNFTs * tokensPerNFT;
+
+        // Check that we don't surpass max supply
+        require(
+            (totalSupply() + tokensToMint) <= maxTotalSupply,
+            "Exceeds the max total supply available."
+        );
+
+        _mint(msg.sender, tokensToMint);
     } 
 
 

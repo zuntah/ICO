@@ -37,8 +37,8 @@
       ]
     },
     "/Users/jonathanshahak/privateprojects/web3/ICO/contracts/JohnnyTimeToken.sol": {
-      "lastModificationDate": 1656517761453,
-      "contentHash": "cdc0945bb5124ce1c08a45d20ce0029f",
+      "lastModificationDate": 1656518258191,
+      "contentHash": "d020c9c2a9327d8d11849f220b9adc8b",
       "sourceName": "contracts/JohnnyTimeToken.sol",
       "solcConfig": {
         "version": "0.8.10",
