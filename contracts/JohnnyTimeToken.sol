@@ -21,7 +21,22 @@
         JohnnyTimeNFTContract = JohnnyTimeNFT(_johnnyTimeNFTAddress);
     }
 
+    function mint(uint256 _requestedAmount) public payable {
 
+        // Check that the user sent enough ETH
+        uint256 requiredETHAmount = tokenPrice * _requestedAmount;
+        require(msg.value >= requiredETHAmount, "Need to send more ETH. 1 token = 0.001 ETH.");
+        
+        uint256 amountWithDecimals = _requestedAmount * 10**18;
+
+        // Check that we don't surpass max supply
+        require(
+            (totalSupply() + amountWithDecimals) <= maxTotalSupply,
+            "Exceeds the max total supply available."
+        );
+
+        _mint(msg.sender, amountWithDecimals);
+    } 
 
 
 
